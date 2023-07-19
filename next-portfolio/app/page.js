@@ -3,6 +3,11 @@ import Image from 'next/image'
 import heroPic from "../public/images/index-hero.jpg"
 import profilePic from "../public/images/profile.jpg"
 
+export const metadata = {
+    title: "Ryoma Yagi",
+    description: "Ryoma Yagiのポートフォリオサイトです",
+}
+
 const Index = () => {
   return (
     <>
@@ -33,7 +38,7 @@ const Index = () => {
             </div>
         </div>
         <div className="ctaButton">
-            <Link href="/contact">Make It Happen!</Link>
+            <Link href="/contact">Contact</Link>
         </div>
     </div>
     </>

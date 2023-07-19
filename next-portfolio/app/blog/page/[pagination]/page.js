@@ -1,19 +1,20 @@
 import Link from "next/link"
 import Image from 'next/image'
-import { getAllBlogs, blogsPerPage } from "../utils/mdQueries"
-import Pagination from "../components/pagination"
+import { getAllBlogs, blogsPerPage } from "./../../../utils/mdQueries"
+import Pagination from "../../../components/pagination"
 
 export const metadata = {
     title: "ブログ",
-    description: "これはブログ一覧ページです",
+    description: "これはブログ一覧ページ（2ページ目以降）です",
 }
 
-const Blog = async() => {
-    // getAllBlogs()
+const PaginationPage = async(props) => {
 
     const { blogs, numberPages } = await getAllBlogs()
-    const limitedBlogs = blogs.slice(0, blogsPerPage)
     // console.log(blogs)
+
+    const currentPage = props.params.pagination
+    const limitedBlogs = blogs.slice((currentPage -1) * blogsPerPage, currentPage * blogsPerPage)
 
     return (
         <>
@@ -41,4 +42,13 @@ const Blog = async() => {
 
 }
 
-export default Blog
+export default PaginationPage
+
+export async function generateStaticParams() {
+    const { numberPages } = await getAllBlogs()
+
+    let paths = []
+    Array.from({ length: numberPages }).map((_, index) => paths.push(`/blog/page/${index + 2}`))
+    
+    return paths
+}
